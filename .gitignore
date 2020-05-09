@@ -1,3 +1,5 @@
 *.[oda]
 *.~
 ./build
+*.out
+*.exe
