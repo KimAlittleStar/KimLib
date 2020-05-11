@@ -2,9 +2,11 @@
 #define _STRING_HPP_
 #include <string>
 #include <list>
+#include <vector>
 
-class KString : public std::string
+class KString
 {
+
 public:
     enum NUMBER_TYPE
     {
@@ -19,6 +21,12 @@ public:
         CASE_INSENSITIVE
     };
     KString();
+    KString(const char *str);
+    KString(const char ch);
+    KString(const std::vector<char> &str);
+    KString(const std::list<char> &str);
+    KString(const std::string &str);
+    KString(const KString &str);
     KString(int num, NUMBER_TYPE type = NUMTYPE_ORI);
     KString(unsigned int num, NUMBER_TYPE type = NUMTYPE_ORI);
     KString(long long num, NUMBER_TYPE type = NUMTYPE_ORI);
@@ -26,7 +34,6 @@ public:
     KString(float num, int procision = 0);
     KString(double num, int procision = 0);
     ~KString();
-    int append(const char ch);
     // 数字转字符串
     static KString number(int num, NUMBER_TYPE type = NUMTYPE_ORI);
     static KString number(unsigned int num, NUMBER_TYPE type = NUMTYPE_ORI);
@@ -61,10 +68,36 @@ public:
     int replace(const char *des, const char *src, int replace_count = -1, CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE);
     int replace(int start, int end = -1);
 
+    inline int length() const;
+    inline void length(int len, char default_value = '\0');
+
+    inline int size() const;
+    inline void size(int len, char default_value = '\0');
+
+    std::string toStdString() const;
+    std::vector<char> toVector() const;
+    const char *toC_str() const;
+    char *toC_str();
+
+    int append(const char *str);
+    int append(const char ch);
+    int append(const std::vector<char> &str);
+    int append(const std::list<char> &str);
+    int append(const std::string &str);
+    int append(const KString &str);
+    friend std::ostream &operator<<(std::ostream &os, const KString &str);
+    const char operator[](int i) const;
+    char &operator[](int i);
+
 private:
+    std::vector<char> _data;
+    int _length = 0;
+    bool push_back(const char ch);
+    bool check_append(int newsize = 0);
+
 #define INTAGER_TO_STR(num, type, append_function)            \
     ({                                                        \
-        if (type != 0)          \
+        if (type != 0)                                        \
         {                                                     \
             char numchar[65] = {0};                           \
             int i = 0;                                        \
@@ -98,10 +131,14 @@ private:
                 }                                             \
                 num /= type;                                  \
             }                                                 \
+            if (i == 0)                                       \
+            {                                                 \
+                i = 1;                                        \
+            }                                                 \
             do                                                \
             {                                                 \
-                append_function(numchar[i]);                  \
                 i--;                                          \
+                append_function(numchar[i]);                  \
             } while (i >= 0);                                 \
         }                                                     \
     })

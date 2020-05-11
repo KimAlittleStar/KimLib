@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    KString ss(1111111111111111111LL,KString::NUMTYPE_ORI);
+    KString ss(3.9902);
     std::cout<<ss<<std::endl;
     std::cout<<"hello world"<<std::endl;
     return 0;

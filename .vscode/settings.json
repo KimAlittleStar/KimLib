@@ -43,5 +43,7 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "string.hpp": "c"
-    }
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true
 }
