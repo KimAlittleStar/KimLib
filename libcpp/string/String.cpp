@@ -172,6 +172,7 @@ int KString::append(const std::vector<char> &str)
 }
 int KString::append(const std::list<char> &str)
 {
+    int old_size = _length;
     check_append(_length + str.size());
     for (char i : str)
     {
@@ -179,9 +180,11 @@ int KString::append(const std::list<char> &str)
             break;
         _data[_length++] = i;
     }
+    return _length-old_size;
 }
 int KString::append(const std::string &str)
 {
+    int old_size = _length;
     check_append(_length + str.size());
     for (char i : str)
     {
@@ -189,14 +192,17 @@ int KString::append(const std::string &str)
             break;
         _data[_length++] = i;
     }
+    return _length - old_size;
 }
 int KString::append(const KString &str)
 {
+    int old_size = _length;
     check_append(_length + str.length());
     for (int i = 0; str[i] != 0; i++)
     {
         _data[_length++] = str[i];
     }
+    return _length - old_size;
 }
 bool KString::push_back(const char ch)
 {
@@ -204,20 +210,12 @@ bool KString::push_back(const char ch)
     _data[_length++] = ch;
     return true;
 }
-int KString::length() const
+
+inline bool KString::check_append(int newsize)
 {
-    return _length;
-}
-bool KString::check_append(int newsize)
-{
-    if (newsize >= _data.size())
+    if (static_cast<size_t>(newsize) >= _data.size())
         _data.resize((newsize + 1) * 4 / 3, 0);
     return true;
-}
-
-int KString::size() const
-{
-    return _data.size() - 1;
 }
 
 std::ostream &operator<<(std::ostream &os, const KString &str)

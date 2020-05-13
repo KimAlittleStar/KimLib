@@ -68,11 +68,9 @@ public:
     int replace(const char *des, const char *src, int replace_count = -1, CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE);
     int replace(int start, int end = -1);
 
-    inline int length() const;
-    inline void length(int len, char default_value = '\0');
+    inline int length() const { return _length; }
 
-    inline int size() const;
-    inline void size(int len, char default_value = '\0');
+    int size() const { return _length; }
 
     std::string toStdString() const;
     std::vector<char> toVector() const;
