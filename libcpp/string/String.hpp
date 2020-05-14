@@ -72,10 +72,11 @@ public:
 
     int size() const { return _length; }
 
-    std::string toStdString() const;
-    std::vector<char> toVector() const;
-    const char *toC_str() const;
-    char *toC_str();
+    std::string toStdString() const { return std::string(_data.data()); }
+    std::vector<char> toVector() const { return _data; }
+
+    inline const char *toC_str() const { return _data.data(); }
+    inline char *toC_str() { return _data.data(); }
 
     int append(const char *str);
     int append(const char ch);
@@ -83,15 +84,32 @@ public:
     int append(const std::list<char> &str);
     int append(const std::string &str);
     int append(const KString &str);
+
+    int indexOf(const char *str, CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOf(const char ch,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOf(const std::vector<char> &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOf(const std::list<char> &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOf(const std::string &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOf(const KString &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+
+    int indexOfLast(const char *str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOfLast(const char ch,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOfLast(const std::vector<char> &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOfLast(const std::list<char> &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOfLast(const std::string &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+    int indexOfLast(const KString &str,CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE,int star = 0,int end = -1);
+
+    bool equals(const KString &str, CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE);
     friend std::ostream &operator<<(std::ostream &os, const KString &str);
-    const char operator[](int i) const;
-    char &operator[](int i);
+    inline const char operator[](int i) const { return _data[i]; }
+    inline char &operator[](int i) { return _data[i]; }
 
 private:
     std::vector<char> _data;
     int _length = 0;
     bool push_back(const char ch);
     bool check_append(int newsize = 0);
+    bool equal_char(const char &ch1, const char &ch2, CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE);
 
 #define INTAGER_TO_STR(num, type, append_function)            \
     ({                                                        \

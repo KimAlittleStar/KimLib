@@ -1,6 +1,7 @@
 #include "String.hpp"
 #include <iostream>
 #include <stdio.h>
+#include <string.h>
 KString::~KString()
 {
 }
@@ -180,7 +181,7 @@ int KString::append(const std::list<char> &str)
             break;
         _data[_length++] = i;
     }
-    return _length-old_size;
+    return _length - old_size;
 }
 int KString::append(const std::string &str)
 {
@@ -223,12 +224,38 @@ std::ostream &operator<<(std::ostream &os, const KString &str)
     os << str._data.data();
     return os;
 }
+inline bool KString::equal_char(const char &ch1, const char &ch2, CASE_SENSITIVE_e case_sensitive)
+{
+    switch (case_sensitive)
+    {
+    case CASE_SENSITIVE:
+        return ch1 == ch2;
 
-const char KString::operator[](int i) const
-{
-    return _data[i];
+    case CASE_INSENSITIVE:
+        return ((ch1 ^ ch2) == 0x20) && ((ch1 | 0x20) >= 'A') && ((ch1 | 0x20) <= 'Z');
+
+    default:
+        return false;
+    }
 }
-char &KString::operator[](int i)
+bool KString::equals(const KString &str, CASE_SENSITIVE_e case_sensitive)
 {
-    return _data[i];
+    if (this->_length != str.length())
+    {
+        return false;
+    }
+    if (case_sensitive == CASE_INSENSITIVE)
+    {
+        for (int i = 0; i < _length; i++)
+        {
+            if (equal_char(_data[i], str[i], case_sensitive) == false)
+                return false;
+        }
+    }
+    else
+    {
+        std::cout << "memcmp = " << memcmp(_data.data(), str.toC_str(), _length) << std::endl;
+        return memcmp(_data.data(), str.toC_str(), _length) == 0;
+    }
+    return true;
 }
