@@ -118,6 +118,8 @@ public:
     inline const char operator[](int i) const { return _data[i]; }
     inline char &operator[](int i) { return _data[i]; }
 
+    KString subStr(int star = 0, int end = -1) const;
+
 private:
     std::vector<char> _data;
     int _length = 0;

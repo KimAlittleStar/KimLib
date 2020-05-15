@@ -372,3 +372,18 @@ double KString::todouble() const
     bool err = true;
     return tofolat(err);
 }
+
+KString KString::subStr(int star, int end) const
+{
+    KString ret;
+    if (star >= _length)
+        return ret;
+    if (end >= _length)
+        end = _length;
+    ret.check_append(end - star);
+    for (int i = star; i < end;i++)
+    {
+        ret[i] = _data[i];
+    }
+    return ret;
+}
