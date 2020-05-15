@@ -232,7 +232,7 @@ inline bool KString::equal_char(const char &ch1, const char &ch2, CASE_SENSITIVE
         return ch1 == ch2;
 
     case CASE_INSENSITIVE:
-        return ((ch1 ^ ch2) == 0x20) && ((ch1 | 0x20) >= 'A') && ((ch1 | 0x20) <= 'Z');
+        return ((ch1 ^ ch2) == 0x20) && ((ch1 | 0x20) >= 'a') && ((ch1 | 0x20) <= 'z');
 
     default:
         return false;
@@ -258,4 +258,117 @@ bool KString::equals(const KString &str, CASE_SENSITIVE_e case_sensitive)
         return memcmp(_data.data(), str.toC_str(), _length) == 0;
     }
     return true;
+}
+signed int KString::toint32(bool &err) const
+{
+    int ret = 0;
+    if(sscanf(this->toC_str(),"%d",&ret) != 1)
+        err = false;
+    else
+        err = true;
+    return ret;
+}
+unsigned int KString::touint32(bool &err) const
+{
+    unsigned int ret = 0;
+    if (sscanf(this->toC_str(), "%u", &ret) != 1)
+        err = false;
+    else
+        err = true;
+    return ret;
+}
+signed short KString::toint16(bool &err) const
+{
+    int ret = 0;
+    if (sscanf(this->toC_str(), "%hd", &ret) != 1)
+        err = false;
+    else
+        err = true;
+    return ret;
+}
+unsigned short KString::touint16(bool &err) const
+{
+    unsigned short ret = 0;
+    if (sscanf(this->toC_str(), "%hu", &ret) != 1)
+        err = false;
+    else
+        err = true;
+    return ret;
+}
+signed char KString::toint8(bool &err) const
+{
+    int ret = 0;
+    if (sscanf(this->toC_str(), "%d", &ret) != 1)
+        err = false;
+    else
+        err = true;
+    return static_cast<signed char>(ret);
+}
+unsigned char KString::touint8(bool &err) const
+{
+    unsigned int ret = 0;
+    if (sscanf(this->toC_str(), "%u", &ret) != 1)
+        err = false;
+    else
+        err = true;
+    return static_cast<unsigned char> (ret);
+}
+float KString::tofolat(bool &err) const
+{
+    float ret = 0;
+    if (sscanf(this->toC_str(), "%f", &ret) != 1)
+        err = false;
+    else
+        err = true;
+    return ret;
+}
+double KString::todouble(bool &err) const
+{
+    double ret = 0;
+    if (sscanf(this->toC_str(), "%lf", &ret) != 1)
+        err = false;
+    else
+        err = true;
+    return ret;
+}
+
+signed int KString::toint32() const
+{
+    bool err = true;
+    return toint32(err);
+}
+unsigned int KString::touint32() const
+{
+    bool err = true;
+    return touint32(err);
+}
+signed short KString::toint16() const
+{
+    bool err = true;
+    return toint16(err);
+}
+unsigned short KString::touint16() const
+{
+    bool err = true;
+    return touint16(err);
+}
+signed char KString::toint8() const
+{
+    bool err = true;
+    return toint8(err);
+}
+unsigned char KString::touint8() const
+{
+    bool err = true;
+    return touint8(err);
+}
+float KString::tofolat() const
+{
+    bool err = true;
+    return tofolat(err);
+}
+double KString::todouble() const
+{
+    bool err = true;
+    return tofolat(err);
 }

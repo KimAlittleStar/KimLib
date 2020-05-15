@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    KString ss(3.9902);
+    KString ss(3.0);
     KString sa("qwertyuio");
     KString sb = "QWERTYUIO";
     std::cout << sb << std::endl;
@@ -11,6 +11,7 @@ int main(void)
     std::cout << sa.equals(KString("QWERTYUIO")) << std::endl;
     std::cout << sa.equals(sb) << std::endl;
     std::cout << sa.equals(sb,KString::CASE_INSENSITIVE) << std::endl;
+    std::cout << "###"<<ss.tofolat()<< std::endl;
 
     ss.append("_hello");
     std::cout << ss << ss.size() << std::endl;
