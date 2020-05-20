@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    KString ss(3.0);
+    KString ss(3.0,2);
     KString sa("qwertyuio");
     KString sb = "QWERTYUIO";
     std::cout << sb << std::endl;

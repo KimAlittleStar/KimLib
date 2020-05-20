@@ -52,22 +52,14 @@ public:
     std::list<KString> extract(const char *exstr) const;
     std::list<KString> extract(const std::string &exstr) const;
     
-    signed int toint32(bool &err) const;
-    unsigned int touint32(bool &err) const;
-    signed short toint16(bool &err) const;
-    unsigned short touint16(bool &err) const;
-    signed char toint8(bool &err) const;
-    unsigned char touint8(bool &err) const;
-    float tofolat(bool &err) const;
-    double todouble(bool &err) const;
-    signed int toint32() const;
-    unsigned int touint32() const;
-    signed short toint16() const;
-    unsigned short touint16() const;
-    signed char toint8() const;
-    unsigned char touint8() const;
-    float tofolat() const;
-    double todouble() const;
+    signed int toint32(bool *err = nullptr) const;
+    unsigned int touint32(bool *err = nullptr) const;
+    signed short toint16(bool *err = nullptr) const;
+    unsigned short touint16(bool *err = nullptr) const;
+    signed char toint8(bool *err = nullptr) const;
+    unsigned char touint8(bool *err = nullptr) const;
+    float tofolat(bool *err = nullptr) const;
+    double todouble(bool *err = nullptr) const;
     
     int remove(int start, int end);
     int remove(const KString &str, int rmcount = -1, CASE_SENSITIVE_e case_sensitive = CASE_SENSITIVE);
@@ -90,7 +82,6 @@ public:
     std::vector<char> toVector() const { return _data; }
 
     inline const char *toC_str() const { return _data.data(); }
-    inline char *toC_str() { return _data.data(); }
 
     int append(const char *str);
     int append(const char ch);
