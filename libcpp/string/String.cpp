@@ -389,12 +389,12 @@ int KString::indexOf(const char *str, CASE_SENSITIVE_e case_sensitive, int star,
     {
         for (int j = 0; j < strlen; j++)
         {
-            if(equal_char(_data[i+j],str[j],case_sensitive) == false)
+            if (equal_char(_data[i + j], str[j], case_sensitive) == false)
             {
                 i += strlen - chTab[_data[i + strlen]];
                 break;
             }
-            if ((strlen-1) == j)
+            if ((strlen - 1) == j)
             {
                 return i;
             }
@@ -402,24 +402,24 @@ int KString::indexOf(const char *str, CASE_SENSITIVE_e case_sensitive, int star,
     }
     return -1;
 }
-int KString::indexOf(const std::vector<char> &str, CASE_SENSITIVE_e case_sensitive , int star , int end )
+int KString::indexOf(const std::vector<char> &str, CASE_SENSITIVE_e case_sensitive, int star, int end)
 {
     return indexOf(KString(str), case_sensitive, star, end);
 }
-int KString::indexOf(const std::list<char> &str, CASE_SENSITIVE_e case_sensitive , int star , int end )
+int KString::indexOf(const std::list<char> &str, CASE_SENSITIVE_e case_sensitive, int star, int end)
 {
     return indexOf(KString(str), case_sensitive, star, end);
 }
-int KString::indexOf(const std::string &str, CASE_SENSITIVE_e case_sensitive , int star , int end )
+int KString::indexOf(const std::string &str, CASE_SENSITIVE_e case_sensitive, int star, int end)
 {
     return indexOf(KString(str), case_sensitive, star, end);
 }
-int KString::indexOf(const KString &str, CASE_SENSITIVE_e case_sensitive , int star , int end )
+int KString::indexOf(const KString &str, CASE_SENSITIVE_e case_sensitive, int star, int end)
 {
     return indexOf(str.toC_str(), case_sensitive, star, end);
 }
 
-int KString::indexOfLast(const char ch, CASE_SENSITIVE_e case_sensitive, int star , int end)
+int KString::indexOfLast(const char ch, CASE_SENSITIVE_e case_sensitive, int star, int end)
 {
     int ret = 0;
     if (end == -1 || end > _length)
@@ -430,6 +430,40 @@ int KString::indexOfLast(const char ch, CASE_SENSITIVE_e case_sensitive, int sta
     {
         if (equal_char(_data[ret], ch, case_sensitive) == true)
             return ret;
+    }
+    return -1;
+}
+
+int KString::indexOfLast(const char *str, CASE_SENSITIVE_e case_sensitive, int star, int end)
+{
+    char chTab[256] = {0};
+    int strlen = 0;
+    if (str == nullptr || star < 0 || (star > end && end != -1))
+        return -1;
+    memset(chTab, 0, 256);
+    while (str[strlen] != '\0')
+    {
+        strlen++;
+        if (chTab[str[strlen]] == 0)
+            chTab[str[strlen]] = strlen;
+    }
+    if (end == -1 || end > _length)
+        end = _length;
+    end -= strlen;
+    for (int i = end; i >= star;)
+    {
+        for (int j = 0; j < strlen; j++)
+        {
+            if (equal_char(_data[i + j], str[j], case_sensitive) == false)
+            {
+                i -= strlen - chTab[_data[i + strlen]];
+                break;
+            }
+            if ((strlen - 1) == j)
+            {
+                return i;
+            }
+        }
     }
     return -1;
 }
